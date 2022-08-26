@@ -136,7 +136,7 @@ public class Engine extends Thread implements KeyListener, ActionListener {
             soil.placeSoil(buffer, 200, 200, 600, 300);
             new Wheat(buffer, 625, 325, 150, 150);
 
-            new Wheat(buffer, 675, 375, 150, 150);
+            new Wheat(buffer, 825, 325, 150, 150);
 
             player.Move(up,down,left,right,height,width);
 
