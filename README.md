@@ -13,11 +13,9 @@ sO I decided to make a *farming simulator* instead.
 
 Why? I don't know. I just thought it would be fun to make a farming simulator
 
------
+----- 
 
 ## How to Run
-
------
 
 Because compsci bad, we are using applets for this shit. I'm not sorry tho. Cope.
 
@@ -33,8 +31,6 @@ Then, run the applet. It *should* work.
 ## Controls
 
 WASD
-
------
 
 ## Credits
 
