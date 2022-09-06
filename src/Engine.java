@@ -176,7 +176,7 @@ public class Engine extends Thread implements KeyListener, ActionListener {
                 buffer.drawString("Is Day Bool: " + daylight.getIsDay(), 100, 280);
 
                 buffer.drawString("Next Night In: " + daylight.nextNightIn, 100, 300);
-                buffer.drawString("Next Day In: " + daylight.nextDayIn, 100, 320);`
+                buffer.drawString("Next Day In: " + daylight.nextDayIn, 100, 320);
 
                 buffer.drawString("Wheat 1 Position X: " + Wheat.getXPosition(), 100, 340);
             }
