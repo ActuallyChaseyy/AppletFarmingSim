@@ -20,6 +20,8 @@ public class Engine extends Thread implements KeyListener, ActionListener {
     Player player = new Player(100,100);
     Soil soil = new Soil(1,1,1,1);
 
+    int amountOfWheat = 2;
+
 
 
     public Engine(Applet a, int f) {
@@ -139,6 +141,12 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
             daylight.doDC(buffer, width, height);
 
+            Wheat wheatStack[] = new Wheat[amountOfWheat];
+
+            for (int i = 0; i < amountOfWheat; i++) {
+                wheatStack[i] = new Wheat(buffer,125 * (i + 1),100,100,100);
+            }
+
             soil.placeSoil(buffer, 200, 200, 600, 300);
             new Wheat(buffer, 625, 325, 150, 150);
 
@@ -186,7 +194,7 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
                 buffer.drawString("Wheat 1 Position X: " + Wheat.getXPosition(), 100, 340);
 
-                buffer.drawString("Is touching wheat: " + Wheat.playerTouching(xPosition, yPosition, playerHeight, playerWidth), 100, 360);
+                buffer.drawString("Is touching wheat: " + wheatStack[1].playerTouching(xPosition, yPosition, playerHeight, playerWidth), 100, 360);
             }
 
 
