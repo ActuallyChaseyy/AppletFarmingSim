@@ -131,6 +131,12 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
     public void run() {
         while (true) {
+
+            int xPosition = player.xPos;
+            int yPosition = player.yPos;
+            int playerHeight = player.playerHeight;
+            int playerWidth = player.playerWidth;
+
             daylight.doDC(buffer, width, height);
 
             soil.placeSoil(buffer, 200, 200, 600, 300);
@@ -179,6 +185,8 @@ public class Engine extends Thread implements KeyListener, ActionListener {
                 buffer.drawString("Next Day In: " + daylight.nextDayIn, 100, 320);
 
                 buffer.drawString("Wheat 1 Position X: " + Wheat.getXPosition(), 100, 340);
+
+                buffer.drawString("Is touching wheat: " + Wheat.playerTouching(xPosition, yPosition, playerHeight, playerWidth), 100, 360);
             }
 
 

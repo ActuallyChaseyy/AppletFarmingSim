@@ -2,8 +2,9 @@ import java.awt.*;
 
 @SuppressWarnings("ALL")
 public class Player {
-    private int xPos, yPos;
-    private int playerHeight, playerWidth;
+    public int xPos, yPos;
+    protected int playerHeight;
+    protected int playerWidth;
 
     public Player(int _playerHeight, int _playerWidth) {
 
