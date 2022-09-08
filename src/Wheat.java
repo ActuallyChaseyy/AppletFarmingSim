@@ -14,7 +14,7 @@ public class Wheat extends Plant{
     }
 
     public static boolean playerTouching(int playerX, int playerY, int playerWidth, int playerHeight) {
-        if (playerX + playerWidth > xPos && playerX < xPos + 50 && playerY + playerHeight > yPos && playerY < yPos + 50) {
+        if (playerX + playerWidth > xPos && playerX < xPos + 150 && playerY + playerHeight > yPos && playerY < yPos + 150) {
             return isTouch = true;
         }
         return isTouch = false;
