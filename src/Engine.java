@@ -20,8 +20,9 @@ public class Engine extends Thread implements KeyListener, ActionListener {
     Player player = new Player(100,100);
     Soil soil = new Soil(1,1,1,1);
 
-    int amountOfWheat = 2;
+    int amountOfWheat = 4;
 
+    Wheat wheatStack[] = new Wheat[amountOfWheat];
 
 
     public Engine(Applet a, int f) {
@@ -141,16 +142,11 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
             daylight.doDC(buffer, width, height);
 
-            Wheat wheatStack[] = new Wheat[amountOfWheat];
+            soil.placeSoil(buffer, 1000, 200,600,300);
 
-            for (int i = 0; i < amountOfWheat; i++) {
-                wheatStack[i] = new Wheat(buffer,125 * (i + 1),100,100,100);
+             for (int z = 0; z < amountOfWheat; z++) {
+                wheatStack[z] = new Wheat(buffer, 625 + (175 * z), 325, 150, 150);
             }
-
-            soil.placeSoil(buffer, 200, 200, 600, 300);
-            new Wheat(buffer, 625, 325, 150, 150);
-
-            new Wheat(buffer, 825, 325, 150, 150);
 
             player.Move(up,down,left,right,height,width);
 
@@ -173,7 +169,7 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
             // All Colored Objects Above Here
 
-            buffer.setColor(new Color(0,0,0));
+            buffer.setColor(new Color(0, 0, 0));
             if (debug) {
                 buffer.drawString("up Boolean: " + getDirectionBool("up"), 100, 90);
                 buffer.drawString("down boolean: " + getDirectionBool("down"), 100, 110);
@@ -192,19 +188,17 @@ public class Engine extends Thread implements KeyListener, ActionListener {
                 buffer.drawString("Next Night In: " + daylight.nextNightIn, 100, 300);
                 buffer.drawString("Next Day In: " + daylight.nextDayIn, 100, 320);
 
-                buffer.drawString("Wheat 1 Position X: " + Wheat.getXPosition(), 100, 340);
+                buffer.drawString("Wheat 1 Position X: " + wheatStack[1].getXPosition(), 100, 340);
 
                 buffer.drawString("Is touching wheat: " + wheatStack[1].playerTouching(xPosition, yPosition, playerHeight, playerWidth), 100, 360);
             }
-
-
 
             // Nothing under this comment //
 
             screen.drawImage(offscreen, 0, 0, null);
 
             try {
-                Thread.sleep(1000/fps);
+                 Thread.sleep(1000/fps);
             }
             catch (InterruptedException e ) {
                 System.err.println("Thread Sleep Err: " + e);
@@ -213,6 +207,4 @@ public class Engine extends Thread implements KeyListener, ActionListener {
             buffer.clearRect(0,0,width,height);
         }
     }
-
-
 }

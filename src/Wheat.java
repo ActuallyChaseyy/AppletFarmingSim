@@ -1,7 +1,7 @@
 import java.awt.*;
 
 public class Wheat extends Plant{
-    private static int xPos, yPos;
+    private int xPos, yPos;
     public static boolean isTouch = false;
 
     public Wheat(Graphics g, int _xPos, int _yPos, int Width, int Height) {
@@ -13,15 +13,15 @@ public class Wheat extends Plant{
 
     }
 
-    public static boolean playerTouching(int playerX, int playerY, int playerWidth, int playerHeight) {
-        if (playerX + playerWidth > xPos && playerX < xPos + 150 && playerY + playerHeight > yPos && playerY < yPos + 150) {
+    public boolean playerTouching(int playerX, int playerY, int playerWidth, int playerHeight) {
+        if (playerX + playerWidth > this.xPos && playerX < this.xPos + 150 && playerY + playerHeight > this.yPos && playerY < this.yPos + 150) {
             return isTouch = true;
         }
         return isTouch = false;
     }
 
 
-    public static int getXPosition() {
+    public int getXPosition() {
         return xPos;
     }
 
