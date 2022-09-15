@@ -20,9 +20,11 @@ public class Engine extends Thread implements KeyListener, ActionListener {
     Player player = new Player(100,100);
     Soil soil = new Soil(1,1,1,1);
 
-    int amountOfWheat = 4;
+    int amountOfWheat = 6;
 
     Wheat wheatStack[] = new Wheat[amountOfWheat];
+
+    private Boolean hasInitWheat = false;
 
 
     public Engine(Applet a, int f) {
@@ -144,28 +146,25 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
             soil.placeSoil(buffer, 1000, 200,600,300);
 
+            if (!hasInitWheat) {
+                for (int i = 0; i < amountOfWheat; i++) {
+                    wheatStack[i] = new Wheat(buffer, 625 + (175 * i), 325, 150, 150);
+                }
+                hasInitWheat = true;
+            }
+
              for (int z = 0; z < amountOfWheat; z++) {
-                wheatStack[z] = new Wheat(buffer, 625 + (175 * z), 325, 150, 150);
+                wheatStack[z].draw(buffer);
+            }
+
+            if (wheatStack[0].playerTouching(xPosition, yPosition, playerWidth, playerHeight)) {
+                wheatStack[0].setPosition(0,0);
             }
 
             player.Move(up,down,left,right,height,width);
 
-            /*
-            if(up) {
-                player.MoveUp();
-            }
-            if (down) {
-                player.MoveDown();
-            }
-            if (left) {
-                player.MoveLeft();
-            }
-            if (right) {
-                player.MoveRight();
-            }
-            */
-
             player.drawPlayer(buffer);
+
 
             // All Colored Objects Above Here
 
@@ -188,7 +187,7 @@ public class Engine extends Thread implements KeyListener, ActionListener {
                 buffer.drawString("Next Night In: " + daylight.nextNightIn, 100, 300);
                 buffer.drawString("Next Day In: " + daylight.nextDayIn, 100, 320);
 
-                buffer.drawString("Wheat 1 Position X: " + wheatStack[1].getXPosition(), 100, 340);
+                buffer.drawString("Wheat 1 Position X: " + wheatStack[0].getXPosition(), 100, 340);
 
                 buffer.drawString("Is touching wheat: " + wheatStack[1].playerTouching(xPosition, yPosition, playerHeight, playerWidth), 100, 360);
             }
