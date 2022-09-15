@@ -157,8 +157,10 @@ public class Engine extends Thread implements KeyListener, ActionListener {
                 wheatStack[z].draw(buffer);
             }
 
-            if (wheatStack[0].playerTouching(xPosition, yPosition, playerWidth, playerHeight)) {
-                wheatStack[0].setPosition(0,0);
+            for (int i = 0; i < amountOfWheat; i++) {
+                if (wheatStack[i].playerTouching(xPosition, yPosition, playerHeight, playerWidth)) {
+                    wheatStack[i].setPosition(-2000, -1000);
+                }
             }
 
             player.Move(up,down,left,right,height,width);
