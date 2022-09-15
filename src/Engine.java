@@ -24,6 +24,8 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
     Wheat wheatStack[] = new Wheat[amountOfWheat];
 
+    private Boolean hasInitWheat = false;
+
 
     public Engine(Applet a, int f) {
         fps = f;
@@ -144,30 +146,19 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
             soil.placeSoil(buffer, 1000, 200,600,300);
 
-             for (int z = 0; z < amountOfWheat; z++) {
-                wheatStack[z] = new Wheat(buffer, 625 + (175 * z), 325, 150, 150);
-                wheatStack[z].draw(buffer);
-
-
+            if (!hasInitWheat) {
+                for (int i = 0; i < amountOfWheat; i++) {
+                    wheatStack[i] = new Wheat(buffer, 625 + (175 * i), 325, 150, 150);
+                }
+                hasInitWheat = true;
             }
 
-             /* for (int z = 0; z < amountOfWheat; z++) {
-                 if (wheatStack[z].playerTouching(xPosition, yPosition, playerWidth, playerHeight)) {
-                     wheatStack[z].changeColor(255, 0, 0);
-                 }
-
-                 else {
-                     wheatStack[z].changeColor(0, 255, 0);
-                 }
-             }
-
-              */
+             for (int z = 0; z < amountOfWheat; z++) {
+                wheatStack[z].draw(buffer);
+            }
 
             if (wheatStack[0].playerTouching(xPosition, yPosition, playerWidth, playerHeight)) {
                 wheatStack[0].setPosition(0,0);
-                wheatStack[0].draw(buffer);
-
-
             }
 
             else {
@@ -175,21 +166,6 @@ public class Engine extends Thread implements KeyListener, ActionListener {
             }
 
             player.Move(up,down,left,right,height,width);
-
-            /*
-            if(up) {
-                player.MoveUp();
-            }
-            if (down) {
-                player.MoveDown();
-            }
-            if (left) {
-                player.MoveLeft();
-            }
-            if (right) {
-                player.MoveRight();
-            }
-            */
 
             player.drawPlayer(buffer);
 
