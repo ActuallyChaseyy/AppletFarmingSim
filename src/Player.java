@@ -6,6 +6,8 @@ public class Player {
     protected int playerHeight;
     protected int playerWidth;
 
+    private static int mode = 0;
+
     public Player(int _playerHeight, int _playerWidth) {
 
         playerHeight = _playerHeight;
@@ -71,5 +73,18 @@ public class Player {
 
         g.setColor(Color.BLUE);
         g.fillOval(xPos, yPos, playerWidth, playerHeight);
+    }
+
+    public static int setFarmingMode(int _mode) {
+
+        // Modes {
+        // 0 = Harvesting
+        // 1 = Planting
+
+        return mode = _mode;
+    }
+
+    public static int getFarmingMode() {
+        return mode;
     }
 }

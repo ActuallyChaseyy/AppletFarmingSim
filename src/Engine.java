@@ -144,6 +144,9 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
             daylight.doDC(buffer, width, height);
 
+            // TODO: Place soil similar to wheat stack
+            // TODO: Add hitdetection to soil
+            // TODO: Add planting on soil
             soil.placeSoil(buffer, 1000, 200,600,300);
 
             if (!hasInitWheat) {
@@ -153,7 +156,7 @@ public class Engine extends Thread implements KeyListener, ActionListener {
                 hasInitWheat = true;
             }
 
-             for (int z = 0; z < amountOfWheat; z++) {
+            for (int z = 0; z < amountOfWheat; z++) {
                 wheatStack[z].draw(buffer);
             }
 
