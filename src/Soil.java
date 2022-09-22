@@ -20,9 +20,9 @@ public class Soil {
 
     }
 
-    public void placeSoil(Graphics g, int _Width, int _Height, int xPos, int yPos) {
+    public void placeSoil(Graphics g) {
         g.setColor(new Color(106,74,58));
-        g.fillRect(xPos, yPos, _Width, _Height);
+        g.fillRect(xPos, yPos, Width, Height);
     }
 
 }

@@ -20,11 +20,14 @@ public class Engine extends Thread implements KeyListener, ActionListener {
     Player player = new Player(100,100);
     Soil soil = new Soil(1,1,1,1);
 
-    int amountOfWheat = 6;
+    private int amountOfWheat = 6;
+    private int amountOfSoil = 6;
 
     Wheat wheatStack[] = new Wheat[amountOfWheat];
+    Soil soilStack[] = new Soil[amountOfSoil];
 
     private Boolean hasInitWheat = false;
+    private Boolean hasInitSoil = false;
 
 
     public Engine(Applet a, int f) {
@@ -144,10 +147,19 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
             daylight.doDC(buffer, width, height);
 
-            // TODO: Place soil similar to wheat stack
             // TODO: Add hitdetection to soil
             // TODO: Add planting on soil
-            soil.placeSoil(buffer, 1000, 200,600,300);
+
+            if (!hasInitSoil){
+                for (int i = 0; i < amountOfSoil; i++) {
+                    soilStack[i] = new Soil(200,200,600 + (200 * i),300);
+                }
+                hasInitSoil = true;
+            }
+
+            for (int i = 0; i < amountOfSoil; i++) {
+                soilStack[i].placeSoil(buffer);
+            }
 
             if (!hasInitWheat) {
                 for (int i = 0; i < amountOfWheat; i++) {
@@ -195,6 +207,8 @@ public class Engine extends Thread implements KeyListener, ActionListener {
                 buffer.drawString("Wheat 1 Position X: " + wheatStack[0].getXPosition(), 100, 340);
 
                 buffer.drawString("Is touching wheat: " + wheatStack[1].playerTouching(xPosition, yPosition, playerHeight, playerWidth), 100, 360);
+
+                buffer.drawString("Score: " + Score.getValue(), 100, 380);
             }
 
             // Nothing under this comment //
