@@ -1,16 +1,25 @@
 import java.awt.*;
 
 @SuppressWarnings("all")
-public class Wheat extends Plant{
+public class Wheat {
     private int xPos, yPos, w, h;
     public static boolean isTouch = false;
     private Color wheatColor;
 
     public int c1, c2, c3;
 
+    private boolean isDead = false;
+
+    private int oldX, oldY;
+
+    private long respawnTimer;
+
+    private long time;
     public Wheat(Graphics g, int _xPos, int _yPos, int Width, int Height) {
         xPos = _xPos;
         yPos = _yPos;
+        oldX = xPos;
+        oldY = yPos;
         w = Width;
         h = Height;
 
@@ -22,6 +31,8 @@ public class Wheat extends Plant{
     }
 
     public void draw(Graphics g) {
+        this.checkRespawn();
+
         g.setColor(wheatColor);
         g.fillRect(xPos, yPos, w, h);
     }
@@ -32,6 +43,8 @@ public class Wheat extends Plant{
 
                 Score.addScore(1);
 
+                respawnTimer = System.currentTimeMillis() + 5000;
+                isDead = true;
                 return isTouch = true;
             }
         }
@@ -54,6 +67,13 @@ public class Wheat extends Plant{
     public void setPosition(int _xPos, int _yPos) {
         xPos = _xPos;
         yPos = _yPos;
+    }
+
+    public void checkRespawn() {
+        if (System.currentTimeMillis() >= respawnTimer && isDead) {
+            this.setPosition(oldX, oldY);
+            isDead = false;
+        }
     }
 
 }
