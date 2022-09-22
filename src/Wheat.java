@@ -29,6 +29,9 @@ public class Wheat extends Plant{
     public boolean playerTouching(int playerX, int playerY, int playerWidth, int playerHeight) {
         if (Player.getFarmingMode() == 0) {
             if (playerX + playerWidth > this.xPos && playerX < this.xPos + 150 && playerY + playerHeight > this.yPos && playerY < this.yPos + 150) {
+
+                Score.addScore(1);
+
                 return isTouch = true;
             }
         }

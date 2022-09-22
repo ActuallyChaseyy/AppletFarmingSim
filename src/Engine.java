@@ -207,6 +207,8 @@ public class Engine extends Thread implements KeyListener, ActionListener {
                 buffer.drawString("Wheat 1 Position X: " + wheatStack[0].getXPosition(), 100, 340);
 
                 buffer.drawString("Is touching wheat: " + wheatStack[1].playerTouching(xPosition, yPosition, playerHeight, playerWidth), 100, 360);
+
+                buffer.drawString("Score: " + Score.getValue(), 100, 380);
             }
 
             // Nothing under this comment //
