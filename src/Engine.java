@@ -209,6 +209,10 @@ public class Engine extends Thread implements KeyListener, ActionListener {
                 buffer.drawString("Is touching wheat: " + wheatStack[1].playerTouching(xPosition, yPosition, playerHeight, playerWidth), 100, 360);
 
                 buffer.drawString("Score: " + Score.getValue(), 100, 380);
+
+                buffer.drawString("Wheat 1 dieTimer: " + wheatStack[0].dieTimer, 100, 400);
+
+                buffer.drawString("Wheat 1 respawn timer: " + wheatStack[0].respawnTimer, 100, 420);
             }
 
             // Nothing under this comment //
