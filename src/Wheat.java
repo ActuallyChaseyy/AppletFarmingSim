@@ -1,7 +1,7 @@
 import java.awt.*;
 
 @SuppressWarnings("all")
-public class Wheat {
+public class Wheat extends Plant {
     private int xPos, yPos, w, h;
     public static boolean isTouch = false;
     private Color wheatColor;
@@ -12,9 +12,17 @@ public class Wheat {
 
     private int oldX, oldY;
 
-    private long respawnTimer;
+    public long respawnTimer;
 
     private long time;
+
+    private long maxAge;
+    public long dieTimer;
+
+    private int stage = 0;
+
+    private long ageTimer;
+
     public Wheat(Graphics g, int _xPos, int _yPos, int Width, int Height) {
         xPos = _xPos;
         yPos = _yPos;
@@ -28,10 +36,14 @@ public class Wheat {
         c3 = 10;
 
         wheatColor = new Color(c1,c2,c3);
+
+        maxAge = genRand(6001, 10001);
+        dieTimer = System.currentTimeMillis() + maxAge;
     }
 
     public void draw(Graphics g) {
         this.checkRespawn();
+        this.age();
 
         g.setColor(wheatColor);
         g.fillRect(xPos, yPos, w, h);
@@ -73,7 +85,25 @@ public class Wheat {
         if (System.currentTimeMillis() >= respawnTimer && isDead) {
             this.setPosition(oldX, oldY);
             isDead = false;
+
+            maxAge = genRand(15001, 30001);
+            dieTimer = System.currentTimeMillis() + maxAge;
+
+            ageTimer = System.currentTimeMillis() + 1000;
         }
+    }
+
+    private void age() {
+        if (System.currentTimeMillis() >= dieTimer && !isDead) {
+            isDead = true;
+            this.setPosition(-2000, -2000);
+
+            respawnTimer = System.currentTimeMillis() + 5000;
+        }
+    }
+
+    public long genRand(long min, long max) {
+        return (long) (Math.random() * (max - min + 1) + min);
     }
 
 }
