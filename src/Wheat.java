@@ -1,7 +1,7 @@
 import java.awt.*;
 
 @SuppressWarnings("all")
-public class Wheat {
+public class Wheat extends Plant {
     private int xPos, yPos, w, h;
     public static boolean isTouch = false;
     private Color wheatColor;
@@ -18,6 +18,11 @@ public class Wheat {
 
     private long maxAge;
     public long dieTimer;
+
+    private int stage = 0;
+
+    private long ageTimer;
+
     public Wheat(Graphics g, int _xPos, int _yPos, int Width, int Height) {
         xPos = _xPos;
         yPos = _yPos;
@@ -81,8 +86,10 @@ public class Wheat {
             this.setPosition(oldX, oldY);
             isDead = false;
 
-            maxAge = genRand(1001, 10001);
+            maxAge = genRand(15001, 30001);
             dieTimer = System.currentTimeMillis() + maxAge;
+
+            ageTimer = System.currentTimeMillis() + 1000;
         }
     }
 

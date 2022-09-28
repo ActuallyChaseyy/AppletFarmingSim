@@ -80,6 +80,8 @@ public class Player {
         // Modes {
         // 0 = Harvesting
         // 1 = Planting
+        // 2 = Watering
+        // }
 
         return mode = _mode;
     }

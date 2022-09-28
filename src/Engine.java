@@ -26,6 +26,12 @@ public class Engine extends Thread implements KeyListener, ActionListener {
     Wheat wheatStack[] = new Wheat[amountOfWheat];
     Soil soilStack[] = new Soil[amountOfSoil];
 
+    Water waterBlock = new Water(buffer, 150,150,150,150);
+
+    Seed seedBlock = new Seed(buffer, 350,150,150,150);
+
+    Harvest harvestBlock = new Harvest(buffer, 550,150,150,150);
+
     private Boolean hasInitWheat = false;
     private Boolean hasInitSoil = false;
 
@@ -147,9 +153,7 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
             daylight.doDC(buffer, width, height);
 
-            // TODO: Add hitdetection to soil
-            // TODO: Add planting on soil
-
+            // Run all checks
             if (!hasInitSoil){
                 for (int i = 0; i < amountOfSoil; i++) {
                     soilStack[i] = new Soil(200,200,600 + (200 * i),300);
@@ -178,6 +182,17 @@ public class Engine extends Thread implements KeyListener, ActionListener {
                 }
             }
 
+            waterBlock.playerIsTouching(xPosition, yPosition, playerHeight, playerWidth);
+            seedBlock.playerIsTouching(xPosition, yPosition, playerHeight, playerWidth);
+            harvestBlock.playerIsTouching(xPosition, yPosition, playerHeight, playerWidth);
+
+            // draw water
+            waterBlock.draw(buffer, waterBlock.getWaterColor());
+
+            seedBlock.draw(buffer, seedBlock.getSeedColor());
+
+            harvestBlock.draw(buffer, harvestBlock.getHarvestColor());
+
             player.Move(up,down,left,right,height,width);
 
             player.drawPlayer(buffer);
@@ -187,7 +202,7 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
             buffer.setColor(new Color(0, 0, 0));
             if (debug) {
-                buffer.drawString("up Boolean: " + getDirectionBool("up"), 100, 90);
+                /* buffer.drawString("up Boolean: " + getDirectionBool("up"), 100, 90);
                 buffer.drawString("down boolean: " + getDirectionBool("down"), 100, 110);
                 buffer.drawString("left boolean: " + getDirectionBool("left"), 100, 130);
                 buffer.drawString("right boolean: " + getDirectionBool("right"), 100, 150);
@@ -204,6 +219,8 @@ public class Engine extends Thread implements KeyListener, ActionListener {
                 buffer.drawString("Next Night In: " + daylight.nextNightIn, 100, 300);
                 buffer.drawString("Next Day In: " + daylight.nextDayIn, 100, 320);
 
+                 */
+
                 buffer.drawString("Wheat 1 Position X: " + wheatStack[0].getXPosition(), 100, 340);
 
                 buffer.drawString("Is touching wheat: " + wheatStack[1].playerTouching(xPosition, yPosition, playerHeight, playerWidth), 100, 360);
@@ -213,6 +230,10 @@ public class Engine extends Thread implements KeyListener, ActionListener {
                 buffer.drawString("Wheat 1 dieTimer: " + wheatStack[0].dieTimer, 100, 400);
 
                 buffer.drawString("Wheat 1 respawn timer: " + wheatStack[0].respawnTimer, 100, 420);
+
+                buffer.drawString("Is touching water: " + waterBlock.playerIsTouching(xPosition, yPosition, playerHeight, playerWidth), 100, 440);
+
+                buffer.drawString("Player farming mode: " + player.getFarmingMode(), 100, 460);
             }
 
             // Nothing under this comment //
