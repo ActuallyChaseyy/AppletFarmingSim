@@ -1,7 +1,7 @@
 import java.awt.*;
 
 @SuppressWarnings("all")
-public class Wheat extends Plant {
+public class Wheat extends Plant{
     private int xPos, yPos, w, h;
     public static boolean isTouch = false;
     private Color wheatColor;
@@ -19,17 +19,21 @@ public class Wheat extends Plant {
     private long maxAge;
     public long dieTimer;
 
-    private int stage = 0;
-
     private long ageTimer;
+    private int hitBoxX, hitBoxY, hitBoxWidth, hitBoxHeight;
 
-    public Wheat(Graphics g, int _xPos, int _yPos, int Width, int Height) {
+    private int lvl;
+    public Wheat(Graphics g, int _xPos, int _yPos, int Width, int Height, int _hitBoxX, int _hitBoxY) {
         xPos = _xPos;
         yPos = _yPos;
         oldX = xPos;
         oldY = yPos;
         w = Width;
         h = Height;
+        hitBoxX = _hitBoxX;
+        hitBoxY = _hitBoxY;
+        hitBoxWidth = hitBoxX + w;
+        hitBoxHeight = hitBoxY + h;
 
         c1 = 255;
         c2 = 186;
@@ -49,14 +53,38 @@ public class Wheat extends Plant {
         g.fillRect(xPos, yPos, w, h);
     }
 
-    public boolean playerTouching(int playerX, int playerY, int playerWidth, int playerHeight) {
+    /* public boolean playerTouching(int playerX, int playerY, int playerWidth, int playerHeight) {
         if (Player.getFarmingMode() == 0) {
             if (playerX + playerWidth > this.xPos && playerX < this.xPos + 150 && playerY + playerHeight > this.yPos && playerY < this.yPos + 150) {
 
                 Score.addScore(1);
 
-                respawnTimer = System.currentTimeMillis() + 5000;
+                respawnTimer = System.currentTimeMillis() + 500000;
                 isDead = true;
+                return isTouch = true;
+            }
+        }
+        return isTouch = false;
+    } */
+
+    public boolean playerTouching(int playerX, int playerY, int playerWidth, int playerHeight) {
+        if (Player.getFarmingMode() == 0) {
+            if (!isDead && playerX + playerWidth > this.hitBoxX && playerX < this.hitBoxWidth && playerY + playerHeight > this.hitBoxY && playerY < this.hitBoxHeight) {
+
+                Score.addScore(1);
+
+                respawnTimer = System.currentTimeMillis() + 500000;
+                isDead = true;
+
+                return isTouch = true;
+            }
+        }
+
+        else if (Player.getFarmingMode() == 1) {
+            if (isDead && playerX + playerWidth > this.hitBoxX && playerX < this.hitBoxWidth && playerY + playerHeight > this.hitBoxY && playerY < this.hitBoxHeight) {
+
+                // Respawn wheat, don't add score
+                this.forceRespawn();
                 return isTouch = true;
             }
         }
@@ -93,12 +121,16 @@ public class Wheat extends Plant {
         }
     }
 
+    public void forceRespawn() {
+        respawnTimer = 0;
+    }
+
     private void age() {
         if (System.currentTimeMillis() >= dieTimer && !isDead) {
             isDead = true;
             this.setPosition(-2000, -2000);
 
-            respawnTimer = System.currentTimeMillis() + 5000;
+            respawnTimer = System.currentTimeMillis() + 500000;
         }
     }
 

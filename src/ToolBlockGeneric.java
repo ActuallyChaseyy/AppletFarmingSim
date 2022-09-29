@@ -12,4 +12,8 @@ public class ToolBlockGeneric {
         xPos = _xPos;
         yPos = _yPos;
     }
+
+    public void placeholderMethod() {
+        System.out.println("You just used the super thingy. good job i guess.");
+    }
 }

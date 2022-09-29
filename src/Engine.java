@@ -167,7 +167,7 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
             if (!hasInitWheat) {
                 for (int i = 0; i < amountOfWheat; i++) {
-                    wheatStack[i] = new Wheat(buffer, 625 + (175 * i), 325, 150, 150);
+                    wheatStack[i] = new Wheat(buffer, 625 + (175 * i), 325, 150, 150, 625 + (175 * i), 325);
                 }
                 hasInitWheat = true;
             }
