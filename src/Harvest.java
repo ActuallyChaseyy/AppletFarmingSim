@@ -1,8 +1,8 @@
 import java.awt.*;
 
-public class Harvest extends ToolBlockGeneric{
+public class Harvest extends ToolBlockGeneric {
     private Color harvestColor;
-
+    Image hoe;
     public Harvest(Graphics g, int _xpos, int _ypos, int _w, int _h) {
         xPos = _xpos;
         yPos = _ypos;
@@ -10,7 +10,15 @@ public class Harvest extends ToolBlockGeneric{
         Height = _h;
 
         harvestColor = new Color(114, 111, 111);
+        hoe = Toolkit.getDefaultToolkit().getImage("hoe.png");
     }
+
+    @Override
+    public void draw(Graphics g) {
+        // ngl im getting lazy so im gonna jump into photoshop and make the sprite there
+        // g.drawImage(hoe, xPos, yPos, Width, Height, null);
+        super.drawDefault(g, harvestColor);
+        }
 
     public boolean playerIsTouching(int playerX, int playerY, int playerWidth, int playerHeight) {
         if (playerX + playerWidth > this.xPos && playerX < this.xPos + 150 && playerY + playerHeight > this.yPos && playerY < this.yPos + 150) {

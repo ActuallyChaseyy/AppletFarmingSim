@@ -29,4 +29,8 @@ public class Seed extends ToolBlockGeneric{
         return seedColor;
     }
 
+    @Override
+    public void draw(Graphics g) {
+        super.drawDefault(g, seedColor);
+    }
 }

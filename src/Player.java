@@ -71,8 +71,27 @@ public class Player {
 
         // Making a circle sprite w a gun
 
-        g.setColor(Color.BLUE);
-        g.fillOval(xPos, yPos, playerWidth, playerHeight);
+        // I've just come across the above comment on 16-10-22. My idea for this game has
+        // changed greatly
+
+        switch (this.getFarmingMode()) {
+            case 1:
+                g.setColor(Color.GREEN);
+                g.fillOval(xPos, yPos, playerWidth, playerHeight);
+                break;
+            case 2:
+                g.setColor(Color.BLUE);
+                g.fillOval(xPos, yPos, playerWidth, playerHeight);
+                break;
+            case 0:
+                g.setColor(Color.GRAY);
+                g.fillOval(xPos, yPos, playerWidth, playerHeight);
+                break;
+            default:
+                g.setColor(Color.RED);
+                g.fillOval(xPos, yPos, playerWidth, playerHeight);
+
+        }
     }
 
     public static int setFarmingMode(int _mode) {
