@@ -15,7 +15,6 @@ public class Engine extends Thread implements KeyListener, ActionListener {
     private boolean debug;
     private int timecount = 0;
     private boolean isDay = true;
-    Scene Scene = new Scene();
     doDaylightCycle daylight = new doDaylightCycle(120000,60000);
     Player player = new Player(100,100);
     Soil soil = new Soil(1,1,1,1);
@@ -26,14 +25,16 @@ public class Engine extends Thread implements KeyListener, ActionListener {
     Wheat wheatStack[] = new Wheat[amountOfWheat];
     Soil soilStack[] = new Soil[amountOfSoil];
 
-    Water waterBlock = new Water(buffer, 150,150,150,150);
+    Water waterBlock = new Water(buffer, 75,300,150,150);
 
-    Seed seedBlock = new Seed(buffer, 350,150,150,150);
+    Seed seedBlock = new Seed(buffer, 75,475,150,150);
 
-    Harvest harvestBlock = new Harvest(buffer, 550,150,150,150);
+    Harvest harvestBlock = new Harvest(buffer, 75,650,150,150);
+    Level Level = new Level();
 
     private Boolean hasInitWheat = false;
     private Boolean hasInitSoil = false;
+    Font scoreFont;
 
 
     public Engine(Applet a, int f) {
@@ -44,9 +45,10 @@ public class Engine extends Thread implements KeyListener, ActionListener {
         offscreen = a.createImage(width, height);
         buffer = offscreen.getGraphics();
         a.addKeyListener(this);
-        a.requestFocus();
 
         debug = false;
+
+        scoreFont = new Font("Fuzzy Bubbles", Font.BOLD, 60);
     }
 
     public Engine(Applet a, int f, boolean debugToggle) {
@@ -153,10 +155,14 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
             daylight.doDC(buffer, width, height);
 
+            // Draw level / scene first, overlay everything on top
+            Level.drawGrass(buffer);
+            Level.drawPath(buffer);
+
             // Run all checks
             if (!hasInitSoil){
                 for (int i = 0; i < amountOfSoil; i++) {
-                    soilStack[i] = new Soil(200,200,600 + (200 * i),300);
+                    soilStack[i] = new Soil(200,200,600 + (200 * i),100);
                 }
                 hasInitSoil = true;
             }
@@ -167,7 +173,7 @@ public class Engine extends Thread implements KeyListener, ActionListener {
 
             if (!hasInitWheat) {
                 for (int i = 0; i < amountOfWheat; i++) {
-                    wheatStack[i] = new Wheat(buffer, 625 + (175 * i), 325, 150, 150, 625 + (175 * i), 325);
+                    wheatStack[i] = new Wheat(buffer, 625 + (175 * i), 125, 150, 150, 625 + (175 * i), 125);
                 }
                 hasInitWheat = true;
             }
@@ -187,15 +193,22 @@ public class Engine extends Thread implements KeyListener, ActionListener {
             harvestBlock.playerIsTouching(xPosition, yPosition, playerHeight, playerWidth);
 
             // draw water
-            waterBlock.draw(buffer, waterBlock.getWaterColor());
-
-            seedBlock.draw(buffer, seedBlock.getSeedColor());
-
-            harvestBlock.draw(buffer, harvestBlock.getHarvestColor());
+            waterBlock.draw(buffer);
+            seedBlock.draw(buffer);
+            harvestBlock.draw(buffer);
 
             player.Move(up,down,left,right,height,width);
 
             player.drawPlayer(buffer);
+
+            // Score overlays everything :)
+            buffer.setFont(scoreFont);
+            buffer.setColor(Color.ORANGE);
+            buffer.drawString("DOLLAS: $$" + Score.getValue(), 1400, 900);
+
+            // Coming soon to a theatre near you: Soil (2) (the sequel) (electric boogaloo)
+            buffer.setColor(Color.RED);
+            buffer.drawString("COMING SOON: SOIL, PART 2", 550 + 250 /* Im lazy */, 650);
 
 
             // All Colored Objects Above Here
@@ -234,6 +247,8 @@ public class Engine extends Thread implements KeyListener, ActionListener {
                 buffer.drawString("Is touching water: " + waterBlock.playerIsTouching(xPosition, yPosition, playerHeight, playerWidth), 100, 440);
 
                 buffer.drawString("Player farming mode: " + player.getFarmingMode(), 100, 460);
+
+                buffer.drawString("System time now: " + System.currentTimeMillis(), 100, 500);
             }
 
             // Nothing under this comment //
@@ -241,7 +256,7 @@ public class Engine extends Thread implements KeyListener, ActionListener {
             screen.drawImage(offscreen, 0, 0, null);
 
             try {
-                 Thread.sleep(1000/fps);
+                Thread.sleep(1000/fps);
             }
             catch (InterruptedException e ) {
                 System.err.println("Thread Sleep Err: " + e);

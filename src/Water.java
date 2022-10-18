@@ -17,8 +17,6 @@ public class Water extends ToolBlockGeneric {
         if (playerX + playerWidth > this.xPos && playerX < this.xPos + 150 && playerY + playerHeight > this.yPos && playerY < this.yPos + 150) {
             Player.setFarmingMode(2);
 
-            super.placeholderMethod();
-
             return true;
         }
         return false;
@@ -32,4 +30,9 @@ public class Water extends ToolBlockGeneric {
         return waterColor;
     }
 
+    @Override
+    public void draw(Graphics g) {
+        g.setColor(waterColor);
+        g.fillRect(xPos, yPos, Width, Height);
+    }
 }
